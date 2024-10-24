@@ -1,7 +1,7 @@
 // Call the dataTables jQuery plugin
 $(document).ready(function() {
 	
-	cargarUsuarios
+	cargarUsuarios();
 	
   $('#usuarios').DataTable();
 });
@@ -9,7 +9,7 @@ $(document).ready(function() {
 
 async function cargarUsuarios(){
 		
-  const rawResponse = await fetch('api/usuario', {
+  const rawResponse = await fetch('api/usuarios', {
     method: 'GET',
     headers: {
       'Accept': 'application/json',
@@ -19,11 +19,11 @@ async function cargarUsuarios(){
   
   const usuarios = await rawResponse.json();
   let listadorHtml= '';		
-  for (let usuario of usuarios){
-	    let botonEliminar = <a href="#" class="btn btn-danger btn-circle"> <i class="fas fa-trash"></i> </a>;
-		let usuariosHtmal = '<tr><td>' + usuario.id + '<tr><td>' + usuario.nombre + ' ' + '<tr><td>' + usuario.apellido + '<tr><td>' 
-		+ usuario.email + '<tr><td>' +  usuario.telefono + '<tr><td>' + botonEliminar + '</tr></td>';
-		listadorHtml+= usuariosHtmal;
+  for (let usuario of usuarios) {
+      let botonEliminar = '<a href="#" class="btn btn-danger btn-circle"> <i class="fas fa-trash"></i> </a>';
+      let usuariosHtml = '<tr><td>' + usuario.id + '</td><td>' + usuario.nombre + '</td><td>' + usuario.apellido + '</td><td>' 
+          + usuario.email + '</td><td>' + usuario.telefono + '</td><td>' + botonEliminar + '</td></tr>';
+      listadorHtml += usuariosHtml;
   }
-  document.querySelector('#usuarios tbody').outerHTML = listadorHtml; 	
+  document.querySelector('#tbodyUsuarios').outerHTML = listadorHtml; 	
 }
